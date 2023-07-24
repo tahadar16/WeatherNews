@@ -1,14 +1,18 @@
 package com.dev.weathernews.di
 
 import android.app.Application
-import android.content.Context
 import androidx.room.Room
+import androidx.room.RoomDatabase
+import com.dev.weathernews.BuildConfig
 import com.dev.weathernews.common.Constants
+import com.dev.weathernews.data.local.Converters
+import com.dev.weathernews.data.local.WeatherNewsDatabase
 import com.dev.weathernews.data.remote.WebApi
+import com.dev.weathernews.data.util.MoshiParser
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -40,12 +44,15 @@ class AppModule {
         .create(WebApi::class.java)
 
     @Singleton
+    fun providesMoshi(): Moshi = Moshi.Builder().build()
+
+    @Singleton
     @Provides
-    fun provideDatabase(app: Application) {
+    fun provideDatabase(app: Application, moshi: Moshi): RoomDatabase {
         return Room.databaseBuilder(
             app,
-            /*ADD database class*/
-            Constants.DB_NAME)
-            .build()
+            WeatherNewsDatabase::class.java,
+            Constants.DB_NAME
+        ).addTypeConverter(Converters(MoshiParser(moshi))).build()
     }
 }
