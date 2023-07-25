@@ -9,6 +9,8 @@ import com.dev.weathernews.data.local.Converters
 import com.dev.weathernews.data.local.WeatherNewsDatabase
 import com.dev.weathernews.data.remote.WebApi
 import com.dev.weathernews.data.util.MoshiParser
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -54,5 +56,11 @@ class AppModule {
             WeatherNewsDatabase::class.java,
             Constants.DB_NAME
         ).addTypeConverter(Converters(MoshiParser(moshi))).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFusedLocationProviderClient(app: Application): FusedLocationProviderClient {
+        return LocationServices.getFusedLocationProviderClient(app)
     }
 }
