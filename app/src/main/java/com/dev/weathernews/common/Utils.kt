@@ -10,13 +10,9 @@ import java.util.Locale
 object Utils {
 
     fun formatTimestampToDateTime(timestamp: Long, pattern: String = "yyyy-MM-dd HH:mm:ss"): String {
-        try {
             val date = Date(timestamp)
             val sdf = SimpleDateFormat(pattern, Locale.getDefault())
             return sdf.format(date)
-        } catch(e : Exception) {
-            return ""
-        }
     }
 
     fun kelvinToFarhenheit(kelvin: Double): String {
