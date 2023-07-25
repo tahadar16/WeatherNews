@@ -1,22 +1,29 @@
 package com.dev.weathernews.data.local.entity
 
-import androidx.room.Embedded
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.dev.weathernews.data.remote.dto.Coord
-import com.dev.weathernews.data.remote.dto.MainDto
-import com.dev.weathernews.data.remote.dto.WeatherDto
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
+import com.dev.weathernews.data.local.Converters
 import com.dev.weathernews.domain.model.Main
 import com.dev.weathernews.domain.model.WeatherUpdate
 
 @Entity
 data class WeatherUpdateEntity(
     //TODO add more fields to adjust more options
-    val main : Main,
     @PrimaryKey(autoGenerate = false)
-    val id: Int
+    val id: Int,
+    val weatherTimeStamp: Long,
+    @TypeConverters(Converters::class)
+    val main : Main,
+
 )
 
 fun WeatherUpdateEntity.toWeatherUpdate() : WeatherUpdate {
-    return WeatherUpdate(id, main)
+    return WeatherUpdate(
+        id,
+        main,
+        weatherTimeStamp
+    )
 }

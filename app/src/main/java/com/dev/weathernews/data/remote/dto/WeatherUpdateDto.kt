@@ -15,9 +15,13 @@ data class WeatherUpdateDto(
     val timezone: Int,
     val visibility: Int,
     val weather: List<WeatherDto>,
-    val wind: WindDto
+    val wind: WindDto,
 )
 
 fun WeatherUpdateDto.toWeatherEntity() : WeatherUpdateEntity {
-    return WeatherUpdateEntity(main.toMain(), id)
+    return WeatherUpdateEntity(
+        id,
+        System.currentTimeMillis(),
+        main = main.toMain(),
+        )
 }

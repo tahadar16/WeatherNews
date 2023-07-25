@@ -1,6 +1,8 @@
 package com.dev.weathernews.di
 
 import android.content.Context
+import androidx.room.RoomDatabase
+import com.dev.weathernews.data.local.WeatherNewsDatabase
 import com.dev.weathernews.data.repository.RepositoryImpl
 import com.dev.weathernews.data.remote.WebApi
 import com.dev.weathernews.domain.repository.Repository
@@ -18,13 +20,13 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideWeatherRepo(
-//        db: Database,
+        db: WeatherNewsDatabase,
         api: WebApi,
         @ApplicationContext context: Context
     ): Repository {
         return RepositoryImpl(
-//            db,
             api,
+            db.weatherUpdateDao,
             context
         )
     }

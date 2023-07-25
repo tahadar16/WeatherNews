@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.dev.weathernews.presentation.WeatherViewmodel
+import com.dev.weathernews.presentation.components.WeatherInfoCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,7 +41,6 @@ fun WeatherInfoScreen(
                     containerColor = MaterialTheme.colorScheme.primary
                 ),
                 actions = {
-                    // Add actions to the toolbar here, if needed
                     IconButton(
                         onClick = { /* Handle action click */ }
                     ) {
@@ -56,17 +56,9 @@ fun WeatherInfoScreen(
                 .padding(padding)
                 .fillMaxSize()
         ) {
-//            state.weatherUpdate?.let {
-            if (state.weatherUpdate != null) {
-                Text(
-                    text = "${state.weatherUpdate?.main?.temp}",
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .fillMaxWidth()
-                        .align(Alignment.Center)
-                )
-            } else
-//            } ?:
+            state.weatherUpdate?.let {
+                WeatherInfoCard(weatherUpdate = it)
+            } ?:
             if (state.errMsg.isNotBlank()) {
                 Text(
                     text = state.errMsg,

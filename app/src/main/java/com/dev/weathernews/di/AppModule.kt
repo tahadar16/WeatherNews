@@ -45,12 +45,13 @@ class AppModule {
         .build()
         .create(WebApi::class.java)
 
+    @Provides
     @Singleton
     fun providesMoshi(): Moshi = Moshi.Builder().build()
 
     @Singleton
     @Provides
-    fun provideDatabase(app: Application, moshi: Moshi): RoomDatabase {
+    fun provideDatabase(app: Application, moshi: Moshi): WeatherNewsDatabase {
         return Room.databaseBuilder(
             app,
             WeatherNewsDatabase::class.java,

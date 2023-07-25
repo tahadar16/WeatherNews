@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">WeatherNews</string>
     <string name="could_not_connect">Couldn\'t connect to the server. Check your network</string>
+    <string name="no_record_found_err">No record found. Please check your network connection</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="unable_to_fetch_location">Unable to fetch location. Make sure to grant permission and enable GPS.</string>
     <string name="unexpected_error">Unexpected error occurred</string>
